@@ -1,14 +1,19 @@
 import React from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
 
-export default function ControlButton({
-  title,
-  onPress
-}: any) {
+interface ControlButtonProps {
+  title: string;
+  onPress: () => void;
+  // Thêm dòng này để cho phép nhận style từ bên ngoài truyền vào
+  style?: ViewStyle; 
+}
+
+export default function ControlButton({ title, onPress, style }: ControlButtonProps) {
   return (
     <Pressable
       style={({ pressed }) => [
         styles.btn,
+        style, // Style truyền vào từ HomeScreen sẽ ghi đè style mặc định ở đây
         pressed && styles.pressed
       ]}
       onPress={onPress}
@@ -20,19 +25,25 @@ export default function ControlButton({
 
 const styles = StyleSheet.create({
   btn: {
-    width: 90,
-    height: 90,
-    borderRadius: 24,
+    // Style mặc định, nếu không truyền gì nó sẽ lấy cái này
+    width: 75,
+    height: 75,
+    borderRadius: 37.5,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,.08)"
-  },
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderWidth: 1.5,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+  } as ViewStyle,
+  
   pressed: {
-    transform: [{ scale: 0.92 }]
-  },
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    transform: [{ scale: 0.92 }],
+  } as ViewStyle,
+
   txt: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 22,
-    fontWeight: "700"
-  }
+    fontWeight: "700",
+  } as TextStyle,
 });
